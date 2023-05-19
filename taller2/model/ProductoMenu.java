@@ -23,7 +23,7 @@ public class ProductoMenu implements Producto {
 	}
 	@Override
 	public String generarTextoFactura() {
-		return "con" + nombre;
+		return "con " + nombre;
 	}
 
 }

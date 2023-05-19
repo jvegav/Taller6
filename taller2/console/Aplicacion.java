@@ -1,9 +1,9 @@
 package console;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Exceptions.CostoPedidoException;
 import model.Combos;
 import model.Ingrediente;
 import model.Pedido;
@@ -12,7 +12,11 @@ import model.Restaurante;
 
 public class Aplicacion {
 	
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws Exception  {
+		
+		
+		
+		
 		
 		
 		System.out.println("BIENVENIDOS A COMIDAS RAPIDAS DPOO :)");
@@ -125,6 +129,62 @@ public class Aplicacion {
 			}	
 		}
 		
+		
+		
+		
+		
+		
+		
+		System.out.println("¿Desea eliminar algo del pedido?");
+		System.out.println("1. Si");
+		System.out.println("2. No");
+		
+		
+		Integer opcionEliminar = entrada.nextInt();
+		
+		
+		if(opcionEliminar ==1){
+			ArrayList<String> listaProductos = restaurante.getListaProductosPedido(restaurante.getPedidoEnCurso());
+			int i=0;
+			for(String nombreProd: listaProductos) {
+				System.out.println(i + "."+ nombreProd);
+				i++;
+			}
+			
+			
+			
+			while(opcionEliminar ==1) {
+			System.out.println("Cual producto desea eliminar, ingrese el numero");
+			Integer opcionQuitarProducto = entrada.nextInt();
+			
+			
+				if(listaProductos.size()> opcionQuitarProducto) {
+					restaurante.quitarProductoPedido(opcionQuitarProducto);
+					System.out.println("Productos en el pedido actualizado");
+					ArrayList<String> listaProductosNueva = restaurante.getListaProductosPedido(restaurante.getPedidoEnCurso());
+					int e=0;
+					for(String nombreProd: listaProductosNueva) {
+						System.out.println(e + "."+ nombreProd);
+						e++;
+					}
+					
+					
+					System.out.println("¿Desea eliminar otro producto?");
+					System.out.println("1. Si");
+					System.out.println("2. No");
+					
+					opcionEliminar = entrada.nextInt();					
+					
+				}
+			}
+			
+			
+			
+			
+		}
+		 
+		
+		
 		entrada.close();
 		
 		
@@ -169,33 +229,54 @@ public class Aplicacion {
 	}
 	
 	
-	public static void ejecutarOpcionCombo(int opcionSelecccionada,Restaurante rest)  {
+	public static void ejecutarOpcionCombo(int opcionSelecccionada,Restaurante rest)  throws Exception{
+		try {
 		ArrayList<Combos> listacombos = rest.getCombos();
 		
 		
 		Combos comb = listacombos.get(opcionSelecccionada);
 		Pedido pedidoencurso = rest.getPedidoEnCurso();
 		
-		pedidoencurso.agregarProducto(comb);
-	}
+	
+			pedidoencurso.agregarProducto(comb);}
+		catch(Exception e) {
+			System.out.println("Error " + e.getMessage());
+		}
+			
+}
+		
 	
 	
 	
 	
-	public static void ejecutarOpcionMenu(int opcionseleccionada,Restaurante rest) {
+	
+	public static void ejecutarOpcionMenu(int opcionseleccionada,Restaurante rest) throws Exception {
+		
+		try {
 		ArrayList<ProductoMenu> listacombos = rest.getMenuBase();
-		System.out.println(listacombos);
+		
 		ProductoMenu productomenu = listacombos.get(opcionseleccionada);
 		Pedido pedidoencurso = rest.getPedidoEnCurso();
-		pedidoencurso.agregarProducto(productomenu);
+		
+			pedidoencurso.agregarProducto(productomenu);}
+		catch(Exception e) {
+			System.out.println("Error " + e.getMessage());
+		}
 		
 	}
 	
-	public static void ejecutarOpcionIngrediente(int opcionSeleccionada, Restaurante rest) {
+	public static void ejecutarOpcionIngrediente(int opcionSeleccionada, Restaurante rest) throws Exception{
+		
+		try {
 		ArrayList<Ingrediente> listaIngrediente = rest.getIngredientes();
 		Ingrediente ingrediente = listaIngrediente.get(opcionSeleccionada);
 		Pedido pedidoencurso = rest.getPedidoEnCurso();
-		pedidoencurso.agregarProducto(ingrediente);
+		
+		pedidoencurso.agregarProducto(ingrediente);}
+		catch(Exception e) {
+			System.out.println("Error " + e.getMessage());
+		}
+		
 		
 	}
 

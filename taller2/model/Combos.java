@@ -1,22 +1,21 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Combos implements Producto{
 	
-	private double descuento ;
+	private String descuento ;
 	private String nombre;
 	private int preciototal;
-	private ArrayList<Producto> listaCombos;
+	private HashMap<String,ProductoAjustado> mapaCombos;
 	private String facturaproducto;
 	
-	public Combos(String nombre,double des) {
+	public Combos(String nombre,String des) {
 		this.nombre = nombre;
 		des = descuento;
-		this.listaCombos = new ArrayList<Producto>();
+		this.mapaCombos = new HashMap<String,ProductoAjustado>();
 		generarTextoFactura();
-		
-		
 	}
 	@Override
 	public String getNombre() {
@@ -24,14 +23,19 @@ public class Combos implements Producto{
 	}
 	
 	
-	public void agregarIteamACombo(Producto itemCombo) {
+	public void agregarIteamACombo(ProductoAjustado itemCombo) {
 		int precio = itemCombo.getPrecio();
+		String nombre = itemCombo.getNombre();
 		
 		preciototal = preciototal + precio;
 		
+		mapaCombos.put(nombre,itemCombo);
 		
-		listaCombos.add(itemCombo);
-		
+	}
+	
+	
+	public ProductoAjustado getItemCombo(String nombreprod) {
+		return mapaCombos.get(nombreprod);
 	}
 
 	@Override
